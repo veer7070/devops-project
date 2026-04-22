@@ -1,0 +1,2 @@
+Lets practice bash with Veer
+This is soft link
