@@ -1,18 +1,3 @@
- deploy:
-   runs-on: ubuntu-latest
-   needs: build
-
-  steps:
-    - name: SSH to EC2 and deploy
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd /home/ubuntu
-          ./deploy.shdeploy:
-  
 name: CI-CD Pipeline
 
 on:
@@ -36,8 +21,8 @@ jobs:
 
       - name: Build and Push
         run: |
-          docker build -t yourusername/devops-app .
-          docker push yourusername/devops-app
+          docker build -t veerdoc07/devops-app .
+          docker push veerdoc07/devops-app
 
   deploy:
     runs-on: ubuntu-latest
