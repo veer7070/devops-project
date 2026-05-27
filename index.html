@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DevOps User App</title>
+  <style>
+    body { font-family: Arial; margin: 40px; background: #f4f4f4; }
+    h2 { color: #333; }
+    input { padding: 8px; margin-right: 10px; }
+    button { padding: 8px 12px; margin-left: 5px; }
+    li { margin: 8px 0; }
+    .card { background: white; padding: 20px; border-radius: 8px; width: 300px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>User Management</h2>
+
+  <input id="name" placeholder="Enter name">
+  <button onclick="addUser()">Add</button>
+
+  <h3>Users</h3>
+  <ul id="list"></ul>
+</div>
+
+<script>
+const API = "http://localhost:5000";
+
+function addUser() {
+  const name = document.getElementById("name").value;
+  if (!name) return alert("Enter name");
+
+  fetch(`${API}/users`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({name})
+  })
+  .then(() => {
+    document.getElementById("name").value = "";
+    loadUsers();
+  });
+}
+
+function loadUsers() {
+  fetch(`${API}/users`)
+  .then(res => res.json())
+  .then(data => {
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    data.forEach((user, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${user.name}
+        <button onclick="deleteUser(${index})">Delete</button>
+      `;
+      list.appendChild(li);
+    });
+  });
+}
+
+function deleteUser(index) {
+  fetch(`${API}/users/${index}`, {
+    method: "DELETE"
+  })
+  .then(() => loadUsers());
+}
+
+loadUsers();
+</script>
+
+</body>
+</html>
