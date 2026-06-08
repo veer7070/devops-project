@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
@@ -37,7 +36,7 @@ def delete_user(index):
         app.logger.info(f"User deleted at index: {index}")
         return jsonify({"message": "User deleted"})
     return jsonify({"error": "Invalid index"}), 400
-=======
+
 from flask import Flask
 
 app = Flask(__name__)
@@ -45,7 +44,6 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return "Hello from DevOps Project 🚀"
->>>>>>> 604ba2e7481d20ece2c1e9485f87a448df37c2af
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
